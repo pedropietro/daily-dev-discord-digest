@@ -13,7 +13,7 @@ You (the agent) help the bot owner deploy it from the source code and verify it 
 
 ## Requirements
 
-- Node.js 18.17+ and the bot source (the plugin's Link field points to the repository; the code lives in `bot/`).
+- Node.js 18.17+ and the bot source: `git clone https://github.com/pedropietro/daily-dev-discord-digest` (the code lives in `bot/`).
 - A **daily.dev OAuth app**: daily.dev → Settings → API → OAuth apps → Create app. Redirect URI: `<PUBLIC_BASE_URL>/oauth/callback`. Note the client ID and the client secret (shown once).
 - A public **HTTPS** URL that reaches the bot's HTTP port.
 - A Discord application with a bot user: bot token and application (client) ID.
@@ -33,9 +33,11 @@ The bot does **not** need a personal daily.dev access token. Do not put one in t
 
 Read-only on daily.dev. Tokens and settings are encrypted at rest (AES-256-GCM); refresh tokens are rotated so digests keep arriving while members are away.
 
+Commands and messages are in English, with Brazilian Portuguese command names and messages for members whose Discord client is set to `pt-BR` (for example `/dailydev digest ativar`).
+
 ## Steps
 
-1. **Check the environment.** `node -v` ≥ 18.17. In `bot/`: `npm install`, then `npm test`.
+1. **Get the code and check the environment.** Clone the repository, `node -v` ≥ 18.17. In `bot/`: `npm install`, then `npm test`.
 2. **Create the `.env`.** Copy `bot/.env.example` to `bot/.env`, ask the owner for each value, don't echo secrets back. `TOKEN_ENCRYPTION_KEY`: `openssl rand -base64 32`.
 3. **Expose the callback.** `<PUBLIC_BASE_URL>/healthz` must return `ok` from the internet, and `<PUBLIC_BASE_URL>/oauth/callback` must be registered exactly on the OAuth app.
 4. **Invite the bot.** Discord developer portal → OAuth2 → URL Generator: scopes `bot` and `applications.commands`. No privileged intents. Members must share a server with the bot and allow DMs from it.
